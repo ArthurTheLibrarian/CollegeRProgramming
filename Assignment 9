@@ -1,0 +1,57 @@
+> ee <- head(read.table("C:/Users/arthu/Downloads/EuroEnergy.csv", sep = ",", header=T))
+> ee
+  rownames    gdp energy
+1  Austria  45451  30633
+2  Belgium  62049  58894
+3   Cyprus   2003   1211
+4  Denmark  34540  27049
+5  Finland  28388  26405
+6   France 358675 233907
+> names(ee)[1] <- "Country"
+> names(ee)[2] <- "GDP"
+> names(ee)[3] <- "Energy"
+> ee
+  Country    GDP Energy
+1 Austria  45451  30633
+2 Belgium  62049  58894
+3  Cyprus   2003   1211
+4 Denmark  34540  27049
+5 Finland  28388  26405
+6  France 358675 233907
+> barplot(ee[,3], xlab="Country", main="Energy Use by Country", ylab="Energy Use", names.arg=ee[,1])
+> barplot(ee[,2], xlab="Country", main="GDP by Country", ylab="GDP", names.arg=ee[,1])
+> pie(ee[,3], main="Energy Use by Country", labels=ee[,1])
+> ff <- t(ee)
+> ff
+        1         2         3        4         5         6       
+Country "Austria" "Belgium" "Cyprus" "Denmark" "Finland" "France"
+GDP     " 45451"  " 62049"  "  2003" " 34540"  " 28388"  "358675"
+Energy  " 30633"  " 58894"  "  1211" " 27049"  " 26405"  "233907"
+> nn <- ee["Country"]
+> nn
+  Country
+1 Austria
+2 Belgium
+3  Cyprus
+4 Denmark
+5 Finland
+6  France
+> ff <- t(ee[,2:3])
+> ff
+           1     2    3     4     5      6
+GDP    45451 62049 2003 34540 28388 358675
+Energy 30633 58894 1211 27049 26405 233907
+
+> colnames(ff) <- nn[,1]
+> ff
+       Austria Belgium Cyprus Denmark Finland France
+GDP      45451   62049   2003   34540   28388 358675
+Energy   30633   58894   1211   27049   26405 233907
+> barplot(as.matrix(ff), main="Country GDP and Energy Use", beside=T, col=c("red","blue"))
+> legend("topleft", c("GDP", "Energy Use"), fill=c("red","blue"));
+> install.packages("lattice")
+> library(lattice)
+> barchart(GDP~Country, ee)
+> install.packages("ggplot2")
+> library(ggplot2)
+> ggplot(ee, aes(x=Country, y=GDP)) + geom_bar(stat="identity", width = 0.5)
